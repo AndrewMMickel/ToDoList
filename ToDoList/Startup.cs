@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 
 namespace ToDoList
 {
@@ -10,9 +11,9 @@ namespace ToDoList
     {
         public Startup(IHostingEnvironment env)
         {
-            var builder = new ConfigurationBuilder()
+            IConfigurationBuilder builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddEnvironmentVariables();
+                .AddJsonFile("appsettings.json"); //this line replaces .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
 
@@ -21,6 +22,11 @@ namespace ToDoList
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            //New code
+            services.AddEntityFrameworkMySql()
+              .AddDbContext<ToDoListContext>(options => options
+              .UseMySql(Configuration["ConnectionStrings:DefaultConnection"]));
         }
 
         public void Configure(IApplicationBuilder app)
@@ -36,15 +42,10 @@ namespace ToDoList
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            app.Run(async(context) =>
+            app.Run(async (context) =>
             {
                 await context.Response.WriteAsync("Something went wrong!");
             });
         }
-    }
-
-    public static class DBConfiguration
-    {
-        public static string ConnectionString = "server=localhost;user id=root;password=epicodus;port=3306;database=to_do_list;";
     }
 }
