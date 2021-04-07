@@ -42,20 +42,7 @@ namespace ToDoList.Controllers
             return View(thisItem);
         }
 
-        public ActionResult Delete(int id)
-        {
-            Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
-            return View(thisItem);
-        }
 
-        [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
-            _db.Items.Remove(thisItem);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
-        }
 
         public ActionResult Edit(int id)
         {
@@ -63,5 +50,14 @@ namespace ToDoList.Controllers
             ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
             return View(thisItem);
         }
+
+        [HttpPost]
+        public ActionResult Edit(Item item)
+        {
+            _db.Entry(item).State = EntityState.Modified;
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
+    // Note: Got it working for real this time
 }
