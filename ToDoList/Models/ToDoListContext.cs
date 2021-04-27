@@ -4,14 +4,10 @@ namespace ToDoList.Models
 {
     public class ToDoListContext : DbContext
     {
-        public virtual DbSet<Category> Categories { get; set; } //new line
-        public virtual DbSet<Item> Items { get; set; }          //changed
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Item> Items { get; set; }
+        public virtual DbSet<CategoryItem> CategoryItem { get; set; }
 
         public ToDoListContext(DbContextOptions options) : base(options) { }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseLazyLoadingProxies();
-        }
     }
 }
