@@ -58,7 +58,7 @@ namespace ToDoList.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(Item item, int categoryId)
+        public ActionResult Edit(Item item, int categoryId, Category category)
         {
             bool duplicate = _db.CategoryItem.Any(catItem =>
               catItem.CategoryId == categoryId && catItem.ItemId == item.ItemId);

@@ -9,7 +9,7 @@
 @using (Html.BeginForm())
 {
     @Html.LabelFor(model => model.Description)
-    @Html.TextBoxFor(model => model.Description)
+    @Html.TextBoxFor(model => model.Description, new {@class="form-control"})
 
     @Html.Label("Select category")
     @Html.DropDownList("CategoryId")

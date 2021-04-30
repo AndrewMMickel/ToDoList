@@ -18,6 +18,8 @@
     @Html.Label("Select category")
     @Html.DropDownList("CategoryId")
 
+    @Html.Label("Check if completed")
+    @Html.CheckBoxFor(model => model.Completed)
     <input type="submit" value="Save" />
 }
 
